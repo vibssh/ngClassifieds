@@ -5,10 +5,10 @@
 
   angular
     .module('ngClassifieds')
-    .controller('ClassifiedsCtrl', ['ClassifiedsFac', '$mdSidenav', ClassifiedsCtrl]);
+    .controller('ClassifiedsCtrl', ['ClassifiedsFac', '$mdSidenav', '$mdToast',ClassifiedsCtrl]);
 
   // Main Controller Function
-  function ClassifiedsCtrl(ClassifiedsFac, $mdSidenav) {
+  function ClassifiedsCtrl(ClassifiedsFac, $mdSidenav, $mdToast) {
     var vm = this;
     ClassifiedsFac.then(function (response) {
       vm.classifieds = response.data;
@@ -29,7 +29,22 @@
       email: 'vibs.sh@gmail.com'
     }
     
-    
-    
+    // Adding a Classified 
+    vm.classified = {};
+    vm.saveClassified = function () {
+      if(vm.classified){
+        vm.classified.contact = vm.contact;
+        vm.classifieds.push(vm.classified);
+        vm.classified = {};
+        vm.closeSideNav();
+        $mdToast.show(
+          $mdToast.simple()
+                  .content('Classified Saved!')
+                  .position('top, right')
+                  .hideDelay(3000)
+        );
+      }
+      
+    }
   }
 }());

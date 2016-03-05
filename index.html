@@ -39,25 +39,25 @@
       <form>
         <md-input-container>
           <label for="title">Title</label>
-          <input type="text" id="title" md-autofocus>
+          <input type="text" id="title" md-autofocus data-ng-model="vm.classified.title">
         </md-input-container>
 
         <md-input-container>
           <label for="price">Price</label>
-          <input type="text" id="price" >
+          <input type="text" id="price" data-ng-model="vm.classified.price">
         </md-input-container>
 
         <md-input-container>
           <label for="description">Description</label>
-          <textarea id="description" type="text" ></textarea>
+          <textarea id="description" type="text" data-ng-model="vm.classified.description"></textarea>
         </md-input-container>
 
         <md-input-container>
           <label for="image">Image Link</label>
-          <input type="text" id="image" >
+          <input type="text" id="image" data-ng-model="vm.classified.image">
         </md-input-container>
 
-        <md-button class="md-primary" >Save</md-button>
+        <md-button class="md-primary" data-ng-click="vm.saveClassified(vm.classified)">Save</md-button>
         <md-button class="md-primary">Save Edit</md-button>
         <md-button class="md-warn" data-ng-click="vm.closeSideNav()">Cancel</md-button>
         
