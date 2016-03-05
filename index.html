@@ -57,11 +57,11 @@
           <input type="text" id="image" data-ng-model="vm.classified.image">
         </md-input-container>
 
-        <md-button class="md-primary" data-ng-click="vm.saveClassified(vm.classified)">Save</md-button>
-        <md-button class="md-primary">Save Edit</md-button>
+        <md-button class="md-primary" data-ng-if="!vm.editing" data-ng-click="vm.saveClassified(vm.classified)">Save</md-button>
+        <md-button class="md-primary" data-ng-if="vm.editing" data-ng-click="vm.saveEdit()">Save Edit</md-button>
         <md-button class="md-warn" data-ng-click="vm.closeSideNav()">Cancel</md-button>
         
-        <pre>{{classified | json }}</pre>
+        <pre>{{vm.classified | json }}</pre>
       </form>
     </md-content>
 
@@ -103,7 +103,7 @@
         <div class="classified-admin" data-ng-if="showAdmin">
           <h3>Admin</h3>
           <div layout="row">
-            <md-button class="md-primary">Edit</md-button>
+            <md-button class="md-primary" data-ng-click="vm.editClassified(classified)">Edit</md-button>
             <md-button class="md-warn">Delete</md-button>
           </div>
         </div>
