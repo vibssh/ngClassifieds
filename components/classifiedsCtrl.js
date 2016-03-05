@@ -5,10 +5,10 @@
 
   angular
     .module('ngClassifieds')
-    .controller('ClassifiedsCtrl', ['ClassifiedsFac', '$mdSidenav', '$mdToast', ClassifiedsCtrl]);
+    .controller('ClassifiedsCtrl', ['ClassifiedsFac', '$mdSidenav', '$mdToast', '$mdDialog', ClassifiedsCtrl]);
 
   // Main Controller Function
-  function ClassifiedsCtrl(ClassifiedsFac, $mdSidenav, $mdToast) {
+  function ClassifiedsCtrl(ClassifiedsFac, $mdSidenav, $mdToast, $mdDialog) {
     var vm = this;
     ClassifiedsFac.then(function (response) {
       vm.classifieds = response.data;
@@ -38,7 +38,7 @@
         vm.classified = {};
         vm.closeSideNav();
         showToast('Classified Saved');
-        
+
       }
 
     }
@@ -57,7 +57,24 @@
       vm.closeSideNav();
       showToast('Edit Saved!');
     }
-      
+
+
+    //Deleting a classified
+    vm.deleteClassified = function (event, classified) {
+      var confirm = $mdDialog.confirm()
+        .title('Are you sure you want to delete' + ' ' + classified.title + '?')
+        .ok('Yes')
+        .cancel('No')
+        .targetEvent(event);
+      $mdDialog.show(confirm)
+        .then(function () {
+          var index = vm.classifieds.indexOf(classified);
+          vm.classifieds.splice(index, 1);
+        }, function () {
+          
+      });
+    }
+
     // Common Show Toast Method
     function showToast(message) {
       $mdToast.show(
