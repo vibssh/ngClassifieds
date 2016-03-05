@@ -5,16 +5,31 @@
 
   angular
     .module('ngClassifieds')
-    .controller('ClassifiedsCtrl', ['ClassifiedsFac',ClassifiedsCtrl]);
+    .controller('ClassifiedsCtrl', ['ClassifiedsFac', '$mdSidenav', ClassifiedsCtrl]);
 
-  function ClassifiedsCtrl(ClassifiedsFac) {
+  // Main Controller Function
+  function ClassifiedsCtrl(ClassifiedsFac, $mdSidenav) {
     var vm = this;
-    ClassifiedsFac.then(function (response){
-        vm.classifieds = response.data;
-        console.info(vm.classifieds);
+    ClassifiedsFac.then(function (response) {
+      vm.classifieds = response.data;
+      console.info(vm.classifieds);
     });
-   
+    
+    // Navigation Side Bar Toggle
+    vm.openSideNav = function(){
+      $mdSidenav('left').open();
+    };
+    vm.closeSideNav = function(){
+      $mdSidenav('left').close();
+    };
+    
+    vm.contact = {
+      name: 'Leo Jacobs',
+      phone: '044-7515281100',
+      email: 'vibs.sh@gmail.com'
+    }
+    
+    
     
   }
-
 }());
