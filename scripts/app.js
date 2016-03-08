@@ -4,7 +4,7 @@
   'use strict';
 
   angular
-    .module('ngClassifieds', ['ngMaterial'])
+    .module('ngClassifieds', ['ngMaterial','angular.filter'])
     .config(function ($mdThemingProvider) {
       $mdThemingProvider.theme('default')
         .primaryPalette('teal')

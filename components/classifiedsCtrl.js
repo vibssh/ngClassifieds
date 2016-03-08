@@ -12,9 +12,28 @@
     var vm = this;
     ClassifiedsFac.then(function (response) {
       vm.classifieds = response.data;
-      console.info(vm.classifieds);
+      var classifieds = vm.classifieds;
+      
+      //Getting unique Categories
+      vm.categories = getCategories(vm.classifieds);
+      
     });
-
+    
+    // Function to loop through the categories and get the unique one
+    function getCategories(categories){
+      var categories = [];      
+      angular.forEach(vm.classifieds, function(item){
+        angular.forEach(item.categories, function(value){
+          categories.push(value);
+        });
+      });
+      
+      return _.uniq(categories);
+      
+      
+    }
+  
+    
     // Navigation Side Bar Toggle
     vm.openSideNav = function () {
       $mdSidenav('left').open();
@@ -32,13 +51,12 @@
     // Adding a Classified 
     vm.classified = {};
     vm.saveClassified = function () {
-      if (vm.classified) {
+      if (vm.classified != null) {
         vm.classified.contact = vm.contact;
         vm.classifieds.push(vm.classified);
         vm.classified = {};
         vm.closeSideNav();
         showToast('Classified Saved');
-
       }
 
     }
@@ -71,8 +89,8 @@
           var index = vm.classifieds.indexOf(classified);
           vm.classifieds.splice(index, 1);
         }, function () {
-          
-      });
+
+        });
     }
 
     // Common Show Toast Method
