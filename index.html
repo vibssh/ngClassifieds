@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ngClassifieds</title>
 
-
+  <!-- Favicon -->
+<link rel="icon" href="">
   <!-- Style sheets -->
   <link rel="stylesheet" href="node_modules/angular-material/angular-material.css">
   <link rel="stylesheet" href="node_modules/mdi/css/materialdesignicons.min.css">
@@ -16,142 +17,9 @@
 
 </head>
 
-<body data-ng-app="ngClassifieds" data-ng-controller="ClassifiedsCtrl as vm">
+<body data-ng-app="ngClassifieds" >
 
-  <md-toolbar>
-    <div class="md-toolbar-tools">
-      <p><strong>ngClassifieds</strong></p>
-
-      <md-button data-ng-click="vm.openSideNav()">
-        <md-icon class='mdi mdi-plus-circle'></md-icon>
-        New Classified
-      </md-button>
-      
-       <md-button data-ng-click="showFilters = true">
-        <md-icon class='mdi mdi-magnify'></md-icon>
-        Filters
-      </md-button>
-
-    </div>
-  </md-toolbar>
-
-  <!--Filters Area-->
-  <div class="filters" layout= "row" layout-align="center center" data-ng-show="showFilters">
-    
-     <md-input-container>
-        <label>Enter Search Term</label>
-        <input type="text" data-ng-model="classifiedsFilter">
-      </md-input-container>
-      
-    <md-input-container>
-        <label>Category</label>
-        <md-select data-ng-model="category">
-           <md-option data-ng-repeat="category in vm.categories" value={{category}}>
-            {{category}}
-          </md-option>
-        </md-select>
-      </md-input-container>
-    
-    <md-input-container>
-        <md-button class="md-warn" data-ng-click="classifiedsFilter = ''; category = ''">Clear</md-button>
-      </md-input-container>
-    
-    <div data-ng-repeat = 'classified in vm.classifieds'>
-      <div data-ng-repeat = 'item in classified'>
-        {{item.title}}
-      </div>
-    </div>
-  </div>
-  
-  
-  
-  
-  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
-    <md-toolbar>
-      <h1 class="md-toolbar-tools">Add a Classified</h1>
-    </md-toolbar>
-
-    <md-content layout-padding>
-      <form>
-        <md-input-container>
-          <label for="title">Title</label>
-          <input type="text" id="title" md-autofocus data-ng-model="vm.classified.title">
-        </md-input-container>
-
-        <md-input-container>
-          <label for="price">Price</label>
-          <input type="text" id="price" data-ng-model="vm.classified.price">
-        </md-input-container>
-
-        <md-input-container>
-          <label for="description">Description</label>
-          <textarea id="description" type="text" data-ng-model="vm.classified.description"></textarea>
-        </md-input-container>
-
-        <md-input-container>
-          <label for="image">Image Link</label>
-          <input type="text" id="image" data-ng-model="vm.classified.image">
-        </md-input-container>
-
-        <md-button class="md-primary" data-ng-if="!vm.editing" data-ng-click="vm.saveClassified(vm.classified)">Save</md-button>
-        <md-button class="md-primary" data-ng-if="vm.editing" data-ng-click="vm.saveEdit()">Save Edit</md-button>
-        <md-button class="md-warn" data-ng-click="vm.closeSideNav()">Cancel</md-button>
-
-        <pre>{{vm.classified | json }}</pre>
-      </form>
-    </md-content>
-
-  </md-sidenav>
-
-
-  <md-content class="md-padding" layout="row" layout-wrap data-ng-cloak>
-   
-  
-    <md-card data-ng-repeat="classified in vm.classifieds | 
-                             filter : classifiedsFilter | 
-                             filter: category" 
-                             flex="30"
-                             class="classified">
-      <img ng-src="{{classified.image}}" alt="{{classified.title}}">
-      <md-card-content>
-
-        <div class="classified-info" data-ng-show="!showContact">
-          <h2 class="md-title">
-            {{classified.title}}
-          </h2>
-          <h4>{{classified.posted | date : 'longDate'}}</h4>
-          <h3>{{classified.price | currency:'&#8377;' }}</h3>
-          <p>{{classified.description}}</p>
-          
-        </div>
-
-        <div class="classified-contact" data-ng-show="showContact">
-          <p>
-            <md-icon class="mdi mdi-account"></md-icon>{{classified.contact.name}}</p>
-          <p>
-            <md-icon class="mdi mdi-phone"></md-icon>{{classified.contact.phone}}</p>
-          <p>
-            <md-icon class="mdi mdi-email"></md-icon>{{classified.contact.email}}</p>
-        </div>
-
-        <div layout="row">
-          <md-button data-ng-click="showContact = true" data-ng-show="!showContact">Contact</md-button>
-          <md-button data-ng-click="showContact = false" data-ng-show="showContact">Detail</md-button>
-          <md-button data-ng-click="showAdmin = true" data-ng-show="!showAdmin">Admin</md-button>
-          <md-button data-ng-click="showAdmin = false" data-ng-show="showAdmin">Close</md-button>
-        </div>
-
-        <div class="classified-admin" data-ng-if="showAdmin">
-          <h3>Admin</h3>
-          <div layout="row">
-            <md-button class="md-primary" data-ng-click="vm.editClassified(classified)">Edit</md-button>
-            <md-button class="md-warn" data-ng-click="vm.deleteClassified($event, classified)">Delete</md-button>
-          </div>
-        </div>
-
-      </md-card-content>
-    </md-card>
-  </md-content>
+  <ui-view></ui-view>
 
 
   <!-- Library Scripts -->
@@ -159,7 +27,10 @@
   <script src="node_modules/angular-animate/angular-animate.js"></script>
   <script src="node_modules/angular-aria/angular-aria.js"></script>
   <script src="node_modules/angular-filter/dist/angular-filter.js"></script>
+  <script src="node_modules/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="node_modules/angular-material/angular-material.js"></script>
+  <script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+  <script src="node_modules/angularfire/dist/angularfire.js"></script>  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.js"></script>
 
   <!-- Application Script -->
@@ -167,10 +38,12 @@
 
 
   <!-- Services -->
-  <script src="components/classifiedsFac.js"></script>
+  <script src="components/classifieds/classifiedsFac.js"></script>
 
   <!-- Controllers -->
-  <script src="components/classifiedsCtrl.js"></script>
+  <script src="components/classifieds/classifiedsCtrl.js"></script>
+  <script src="components/classifieds/new/classifiedsNewCtrl.js"></script>
+  <script src="components/classifieds/edit/classifiedsEditCtrl.js"></script>
 
 
   <!-- Directives -->
