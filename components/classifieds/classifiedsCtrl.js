@@ -78,17 +78,8 @@
         vm.closeSideNav();
         showToast('Classified Saved');
       }
-
     }
-
-    // Editing a Classified
-    function editClassified(classified) { // This Classified passed in a parameter is same that is in the ng-repeat object  
-      $state.go('classifieds.edit', {
-        id: classified.$id
-      });
-
-    }
-
+    
     // Save Edit Button
     function saveEdit() {
       vm.editing = false;
@@ -96,26 +87,7 @@
       vm.closeSideNav();
       showToast('Edit Saved!');
     }
-
-
-    //Deleting a classified
-    function deleteClassified(event, classified) {
-      var confirm = $mdDialog.confirm()
-        .title('Are you sure you want to delete' + ' ' + classified.title + '?')
-        .ok('Yes')
-        .cancel('No')
-        .targetEvent(event);
-      $mdDialog.show(confirm)
-        .then(function () {
-        vm.classifieds.$remove(classified);
-        showToast('Classified deleted');
-//          var index = vm.classifieds.indexOf(classified);
-//          vm.classifieds.splice(index, 1);
-        }, function () {
-
-        });
-    }
-
+    
     // Common Show Toast Method
     function showToast(message) {
       $mdToast.show(
